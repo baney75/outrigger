@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title description">
+  <title id="title">Outrigger for T3 Code</title>
+  <desc id="description">A calm browser window and companion panel sharing a connected session.</desc>
+  <defs>
+    <linearGradient id="field" x2="1" y2="1"><stop stop-color="#f9f8f4"/><stop offset="1" stop-color="#eeede7"/></linearGradient>
+    <linearGradient id="panel" x2="0" y2="1"><stop stop-color="#25272e"/><stop offset="1" stop-color="#1d2026"/></linearGradient>
+    <clipPath id="frame"><rect x="674" y="49" width="432" height="264" rx="18"/></clipPath>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="url(#field)"/>
+  <path d="M0 303c191-52 295-68 450-5s343 80 750-32v94H0z" fill="#e9e8e2" opacity=".7"/>
+  <path d="M642 0v360" stroke="#deded8"/>
+  <g transform="translate(58 57)">
+    <rect width="42" height="42" rx="12" fill="#272b34"/>
+    <path d="M12 11v20m9-16v12m9-16v20M12 21h18" fill="none" stroke="#f6f5f1" stroke-width="2" stroke-linecap="round"/>
+    <text x="58" y="30" fill="#30323a" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="-.6">Outrigger</text>
+  </g>
+  <text x="58" y="150" fill="#8c633a" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">FOR T3 CODE</text>
+  <text x="56" y="213" fill="#252831" font-family="Arial,Helvetica,sans-serif" font-size="53" font-weight="700" letter-spacing="-2.3">Keep your place.</text>
+  <text x="58" y="250" fill="#626770" font-family="Arial,Helvetica,sans-serif" font-size="20">Your sessions beside the page.</text>
+  <g>
+    <rect x="674" y="49" width="432" height="264" rx="18" fill="#fff" stroke="#dadbd8"/>
+    <g clip-path="url(#frame)">
+      <rect x="674" y="49" width="432" height="33" fill="#f5f5f3"/>
+      <circle cx="694" cy="65" r="4" fill="#d4d5d1"/><circle cx="709" cy="65" r="4" fill="#d4d5d1"/><circle cx="724" cy="65" r="4" fill="#d4d5d1"/>
+      <rect x="746" y="57" width="182" height="16" rx="8" fill="#e6e7e3"/>
+      <path d="M1000 82v231" stroke="#dedfdb"/>
+      <rect x="694" y="105" width="273" height="11" rx="5" fill="#dddedb"/>
+      <rect x="694" y="128" width="221" height="7" rx="3.5" fill="#ededea"/>
+      <rect x="694" y="146" width="256" height="7" rx="3.5" fill="#ededea"/>
+      <rect x="694" y="180" width="210" height="88" rx="10" fill="#f1f1ee"/>
+      <path d="M711 249l45-42 30 24 31-28 58 46" fill="none" stroke="#cbcec9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="1001" y="82" width="105" height="231" fill="url(#panel)"/>
+      <rect x="1014" y="97" width="12" height="12" rx="3" fill="none" stroke="#f3f2ee" stroke-width="1.5"/>
+      <path d="M1017 100v6m6-6v6m-6-3h6" stroke="#f3f2ee" stroke-width="1"/>
+      <rect x="1033" y="99" width="58" height="7" rx="3" fill="#f3f2ee"/>
+      <circle cx="1019" cy="135" r="3" fill="#d7a66a"/>
+      <rect x="1028" y="132" width="63" height="6" rx="3" fill="#ced0d2"/>
+      <rect x="1013" y="154" width="80" height="54" rx="7" fill="#34343a" stroke="#9b6a36" stroke-width="1"/>
+      <rect x="1021" y="163" width="52" height="6" rx="3" fill="#edce98"/>
+      <rect x="1021" y="177" width="65" height="5" rx="2.5" fill="#a9a9a8"/>
+      <rect x="1021" y="188" width="43" height="5" rx="2.5" fill="#a9a9a8"/>
+      <rect x="1013" y="245" width="80" height="50" rx="7" fill="#33353b"/>
+      <rect x="1021" y="257" width="49" height="5" rx="2.5" fill="#9ea1a5"/>
+      <rect x="1021" y="276" width="64" height="5" rx="2.5" fill="#747a86"/>
+    </g>
+  </g>
+  <circle cx="612" cy="214" r="24" fill="#f7f6f2" stroke="#d7d8d2"/>
+  <path d="M601 214h22m-7-7 7 7-7 7" fill="none" stroke="#b5743c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
