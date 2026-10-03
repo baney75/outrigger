@@ -675,7 +675,9 @@ function App() {
                   </h1>
                 </div>
                 {attentionCount > 0 && (
-                  <span className="attention-pill">{attentionCount} need input</span>
+                  <span className="attention-pill">
+                    {attentionCount} {attentionCount === 1 ? 'needs' : 'need'} input
+                  </span>
                 )}
               </div>
               <label className="search-field">

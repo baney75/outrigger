@@ -19,10 +19,10 @@ Release **0.1.0**, checked on 2026-10-02 (America/New_York). Passing checks narr
 | Public copy review                 | Independent ship review passed                                                                                      |
 | Archive                            | CRC, paths, manifest, bundled source equality, licenses and private-data checks passed                              |
 
-The archive is **348,903 bytes**, with 13 files. SHA-256:
+The archive is **348,907 bytes**, with 13 files. SHA-256:
 
 ```text
-85c9274889d3f95ac3e3eba2b3dd8b1a15b02ab60de539476dbcf2f3bee65826  outrigger-0.1.0.zip
+6cf93a064ca2bc0a7ec48c44e67f2759d810439dd86da980b86305cadb5dd762  outrigger-0.1.0.zip
 ```
 
 The [release](https://github.com/baney75/outrigger/releases/tag/v0.1.0) contains the archive and `SHA256SUMS.txt`. The [Verify workflow](https://github.com/baney75/outrigger/actions/workflows/ci.yml) runs repository checks on GitHub; its status is separate from this local result.
