@@ -10,7 +10,7 @@ Release **0.1.0**, checked on 2026-10-02 (America/New_York). Passing checks narr
 | Type checking and production build | `npm run check` exited 0                                                                                            |
 | Unit and protocol suite            | **25 passed** across three test files                                                                               |
 | Packaged browser suite             | **17 passed** in Chromium **153.0.8010.12**                                                                         |
-| Accessibility                      | Axe found no violations in the tested default light/dark conversation and light session-list views                  |
+| Accessibility                      | Axe found no violations in the tested default dark/light session list and light/dark conversation views             |
 | Dependency audit                   | `npm audit --audit-level=high` reported **0 vulnerabilities**                                                       |
 | Isolated T3 Code 0.0.44            | Protocol 1; exact GPT-6-Sol reply and reconnect persistence passed, exit 0                                          |
 | Isolated T3 Code 0.0.45            | Protocol 1; exact GPT-6-Sol reply and reconnect persistence passed, exit 0                                          |

@@ -223,6 +223,9 @@ test('imports exact custom theme colors and contains hostile message content', a
 
 test('renders light, dark, custom, narrow and short layouts with keyboard access', async () => {
   await boot();
+  // The dark session list is the first screen after pairing; check it before
+  // opening a thread, where only the conversation view was previously covered.
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   server.question();
   await chat();
   await mkdir('docs/images', { recursive: true });
