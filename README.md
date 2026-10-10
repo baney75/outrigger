@@ -8,20 +8,32 @@
 
 ## Install
 
-Download the ZIP from [the latest release](https://github.com/baney75/outrigger/releases/latest), extract it, then follow steps 2–4 below. To build from source:
+Outrigger needs a running, reachable **T3 Code 0.0.44 or 0.0.45** server (orchestration protocol 1) and **Chrome 120 or newer**. It has no Chrome Web Store listing, so you load it as an unpacked extension. It was tested in **Chromium 153.0.8010.12**.
 
-The extension declares **Chrome 120** as its minimum and has been tested in **Chromium 153.0.8010.12**. Building from source needs **Node.js 22.12 or newer**. Connecting needs a running, reachable **T3 Code 0.0.44 or 0.0.45** server. Outrigger supports its orchestration protocol 1. It has no Chrome Web Store listing; install it as an unpacked extension.
+### Install from the release ZIP
 
-1. In this repository, run:
+No Node.js or npm is needed.
+
+1. Download the ZIP from [the latest release](https://github.com/baney75/outrigger/releases/latest) and extract it to a folder you will keep. Chrome reads the extension from that folder every time it starts.
+2. Open `chrome://extensions` and turn on **Developer mode**.
+3. Choose **Load unpacked** and select the extracted folder that contains `manifest.json`.
+4. Start T3 Code. In **Settings → Connections**, create a fresh pairing link. The `t3 serve` command also prints one. Keep that server running and reachable from Chrome.
+5. Click the Outrigger toolbar icon, paste the pairing link, and grant access to that server origin.
+6. Open a session to see its recent messages.
+
+### Build from source
+
+Building needs **Node.js 22.12 or newer**.
+
+1. Clone this repository, then run:
 
    ```sh
    npm ci
    npm run build
    ```
 
-2. Open `chrome://extensions`, turn on **Developer mode**, choose **Load unpacked**, and select this repository's `dist` folder. If you received a ZIP of the built extension, extract it first and select the folder containing `manifest.json`.
-3. Start T3 Code. In **Settings → Connections**, create a fresh pairing link. The `t3 serve` command also shows a connection link. Keep that server running and reachable from Chrome.
-4. Click the Outrigger toolbar icon, paste the pairing link, and grant access to that server origin. Open a session to see its recent messages. If the list is empty, start a session in T3 Code and return to Outrigger.
+2. Open `chrome://extensions`, turn on **Developer mode**, choose **Load unpacked**, and select this repository's `dist` folder.
+3. Pair as in steps 4–6 above.
 
 **Success check:** Your session title appears in the panel; opening it shows the same recent conversation. Type a short message and send it only when you intend to continue that session. The new message should appear in T3 Code. Treat a pairing link like a password, and pair only with a server you trust.
 
@@ -38,15 +50,25 @@ The extension declares **Chrome 120** as its minimum and has been tested in **Ch
 
 ## Compatibility and limits
 
-| Area         | Current scope                                                                                                                                                                            |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| T3 Code      | Released **0.0.44 and 0.0.45**, orchestration protocol **1**, both verified against isolated upstream servers. Unknown protocols fail closed.                                            |
-| Browser      | Manifest V3; declared minimum **Chrome 120**. Tested in **Chromium 153.0.8010.12**. Other browser/version combinations have not been verified.                                           |
-| Install      | Local unpacked extension. There is no store listing.                                                                                                                                     |
-| Connection   | Direct connection to the T3 Code server in your pairing link. Plain HTTP is accepted only for loopback hosts; other origins require HTTPS. The browser must be able to reach the server. |
-| Conversation | Recent message display and supported question/approval controls. T3 Code remains available for full history and actions that need its native interface.                                  |
+| Area         | Current scope                                                                                                                                                                                                                                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| T3 Code      | Released **0.0.44 and 0.0.45**, orchestration protocol **1**, both verified against isolated upstream servers. The **0.0.46** preview and nightly builds use orchestration protocol **2**, which this release does not support; Outrigger rejects it at pairing. A weekly job checks the latest published release. Unknown protocols fail closed. |
+| Browser      | Manifest V3; declared minimum **Chrome 120**. Tested in **Chromium 153.0.8010.12**. Other browser/version combinations have not been verified.                                                                                                                                                                                                    |
+| Install      | Local unpacked extension. There is no store listing.                                                                                                                                                                                                                                                                                              |
+| Connection   | Direct connection to the T3 Code server in your pairing link. Plain HTTP is accepted only for loopback hosts; other origins require HTTPS. The browser must be able to reach the server.                                                                                                                                                          |
+| Conversation | Recent message display and supported question/approval controls. T3 Code remains available for full history and actions that need its native interface.                                                                                                                                                                                           |
 
 Outrigger collects no browsing history and has no telemetry or vendor backend. A paired T3 server and any provider it uses remain separate services. The bearer credential is stored in `chrome.storage.local` with trusted-context access; this is **not an encrypted vault**. See [privacy](docs/privacy.md) and [security](SECURITY.md).
+
+## Troubleshooting
+
+**The server is unreachable.** Confirm T3 Code is running and that Chrome can open its address in a tab. A server bound to `127.0.0.1` accepts connections only from the same machine; to reach it from another device, start it on a reachable host or through Tailscale, then create a new pairing link from that address. Pairing links are single use and expire, so create a fresh one for each attempt.
+
+**HTTPS and Tailscale origins.** Outrigger accepts plain `http://` only for `localhost`, `127.0.0.1`, and `[::1]`. Every other origin must use `https://`. For a Tailscale tailnet, serve T3 Code over HTTPS (for example with `t3 serve --tailscale-serve`) and pair with the resulting `https://` address. A bare tailnet IP or hostname over `http://` is refused. When Chrome asks for access to the server origin, grant it; if you dismissed the prompt, pair again.
+
+**The session list is empty.** Outrigger lists sessions on the server you paired with. Check that the pairing link came from the T3 Code you are using, and that you did not pair with a test or second server. Archived sessions are not listed. Start a session in T3 Code, then reopen the panel. If the panel reports an unsupported protocol, your T3 Code is newer than Outrigger supports; see the compatibility table below.
+
+**Chrome warns about developer-mode extensions.** Chrome shows this notice for any unpacked extension, because Outrigger is not distributed through the Chrome Web Store. Keep Developer mode on to keep the extension loaded. You can dismiss the warning; it does not mean the extension is broken. To update, replace the extracted folder with the new release and choose **Reload** on `chrome://extensions`.
 
 ## Develop and verify
 

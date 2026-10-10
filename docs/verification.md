@@ -14,6 +14,7 @@ Release **0.1.0**, checked on 2026-10-02 (America/New_York). Passing checks narr
 | Dependency audit                   | `npm audit --audit-level=high` reported **0 vulnerabilities**                                                       |
 | Isolated T3 Code 0.0.44            | Protocol 1; exact GPT-6-Sol reply and reconnect persistence passed, exit 0                                          |
 | Isolated T3 Code 0.0.45            | Protocol 1; exact GPT-6-Sol reply and reconnect persistence passed, exit 0                                          |
+| T3 Code 0.0.46 (preview)           | Not supported: orchestration protocol 2; Outrigger rejects it at pairing (see [live testing](live-testing.md))      |
 | Native browser interaction         | Pairing grant, notification grant, actual toolbar-opened side panel, selected-text preview and attached send passed |
 | Adversarial review                 | Named state failures corrected; independent read-only re-review passed those paths                                  |
 | Public copy review                 | Independent ship review passed                                                                                      |
