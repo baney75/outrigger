@@ -12,4 +12,4 @@ The bearer credential lives in `chrome.storage.local`, restricted to trusted ext
 
 Page context is captured only when you press **Attach page**. Review the preview: a URL path or selected text may still be sensitive after URL credentials, query parameters, and fragments are stripped. Outrigger does not collect browsing history, execute imported theme CSS, render remote message images, or load a remote UI. No telemetry or vendor backend is included. See [privacy](docs/privacy.md) for the data inventory.
 
-Supported compatibility is T3 Code 0.0.44 and 0.0.45 with orchestration protocol 1. Both were checked against isolated official servers. Unknown or missing protocols are rejected; see [verification](docs/verification.md) for the evidence and limits.
+Supported compatibility is T3 Code 0.0.44 and 0.0.45 with orchestration protocol 1. Both were checked against isolated official servers. The 0.0.46 preview and nightly builds use orchestration protocol 2, which is not supported. Unknown or missing protocols are rejected; see [verification](docs/verification.md) for the evidence and limits.

@@ -21,15 +21,21 @@ for (let index = 2; index < process.argv.length; index += 2) {
 const option = (key, fallback) =>
   args.get(key) ?? process.env[key.slice(2).toUpperCase().replaceAll('-', '_')] ?? fallback;
 const serverVersion = option('--server-version', '0.0.44');
-const supportedPorts = new Map([
+if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?$/.test(serverVersion)) {
+  throw new Error('Pass --server-version as the exact upstream version, for example 0.0.46.');
+}
+const defaultPorts = new Map([
   ['0.0.44', 4377],
   ['0.0.45', 4378],
 ]);
-const expectedPort = supportedPorts.get(serverVersion);
-const port = Number(option('--port', String(expectedPort)));
-if (expectedPort === undefined || port !== expectedPort) {
-  throw new Error('Select exactly T3 0.0.44 on port 4377 or T3 0.0.45 on port 4378.');
+const port = Number(option('--port', String(defaultPorts.get(serverVersion) ?? 4379)));
+if (!Number.isInteger(port) || port < 1024 || port > 65535) {
+  throw new Error('Choose a loopback port from 1024 to 65535.');
 }
+// Without a signed-in provider (CI, a scratch install) the reply stages cannot run.
+// `--provider-reply false` checks the protocol path only: pair, shell, detail,
+// accepted send, persisted user message, and persistence after reconnect.
+const providerReply = option('--provider-reply', 'true') !== 'false';
 const pairingLog = option('--pairing-log', resolve(local, `live-pair-${serverVersion}.log`));
 const resultPath = resolve(local, `live-smoke-${serverVersion}-result.json`);
 const workspace = resolve(option('--workspace', resolve(local, 'smoke-project')));
@@ -77,7 +83,10 @@ const waitUntil = async (predicate, timeout, label) => {
 const dispatch = async (base, token, command) => {
   const response = await fetch(new URL('/api/orchestration/dispatch', base), {
     method: 'POST',
-    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+    headers: {
+      authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
+    },
     body: JSON.stringify(command),
   });
   if (!response.ok)
@@ -90,7 +99,9 @@ const readDetail = async (base, token, threadId) => {
   const response = await fetch(
     new URL(`/api/orchestration/threads/${encodeURIComponent(threadId)}`, base),
     {
-      headers: { authorization: `Bearer ${token}` },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     },
   );
   if (!response.ok) throw new Error(`Upstream thread detail failed with HTTP ${response.status}.`);
@@ -186,16 +197,18 @@ try {
     'persisted user message',
   );
   mark('user-message-observed');
-  await waitUntil(
-    () =>
-      latest?.messages.some(
-        (message) =>
-          message.role === 'assistant' && !message.streaming && message.text.trim() === nonce,
-      ),
-    timeoutMs,
-    'exact assistant nonce reply',
-  );
-  mark('assistant-replied', 'exact nonce matched');
+  if (providerReply)
+    await waitUntil(
+      () =>
+        latest?.messages.some(
+          (message) =>
+            message.role === 'assistant' && !message.streaming && message.text.trim() === nonce,
+        ),
+      timeoutMs,
+      'exact assistant nonce reply',
+    );
+  if (providerReply) mark('assistant-replied', 'exact nonce matched');
+  else mark('assistant-reply-skipped', 'protocol-only run');
 
   unsubscribe();
   client.disconnect();
@@ -208,16 +221,22 @@ try {
   });
   await waitUntil(
     () =>
-      restored?.messages.some(
-        (message) =>
-          message.role === 'assistant' && !message.streaming && message.text.trim() === nonce,
+      restored?.messages.some((message) =>
+        providerReply
+          ? message.role === 'assistant' && !message.streaming && message.text.trim() === nonce
+          : message.role === 'user' && message.text.includes(nonce),
       ),
     10000,
-    'persisted assistant reply after reconnect',
+    providerReply
+      ? 'persisted assistant reply after reconnect'
+      : 'persisted user message after reconnect',
   );
   unsubscribeRestored();
-  mark('reconnect-persisted', 'reply and thread visible');
-  if (interrupt) {
+  mark(
+    'reconnect-persisted',
+    providerReply ? 'reply and thread visible' : 'message and thread visible',
+  );
+  if (interrupt && providerReply) {
     const firstTurnId = (await readDetail(base, token, threadId)).thread?.latestTurn?.turnId;
     const interruptPrompt =
       'Write a numbered list of 1000 common English nouns, one per line. Do not use tools or read files.';
@@ -247,6 +266,7 @@ try {
     report.interruptResult = observed;
     mark('interrupt-observed', `upstream latest turn ${observed}`);
   }
+  report.providerReply = providerReply;
   report.result = 'pass';
 } catch (error) {
   report.result = 'fail';
