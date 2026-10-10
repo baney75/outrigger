@@ -27,6 +27,8 @@ jobs:
       - run: npm ci
       - name: Protocol smoke against upstream T3 Code
         id: smoke
+        # An explicit `shell: bash` adds -o pipefail, so a failed smoke is not hidden by tee.
+        shell: bash
         run: scripts/upstream-smoke.sh "$T3_SPEC" 2>&1 | tee smoke.log
       - name: Open or update the drift issue
         if: failure() && steps.smoke.outcome == 'failure'
