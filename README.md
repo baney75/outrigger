@@ -81,3 +81,9 @@ npm run check
 `check` runs type checking, unit tests, a production build, and packaged Chromium tests. The optional isolated upstream smoke is described in [live testing](docs/live-testing.md). Observed results and their limits are in [verification](docs/verification.md); the data flow is in [architecture](docs/architecture.md).
 
 Outrigger is made by Donovan Baney under the [MIT license](LICENSE). The interface was designed with Claude Opus 5.5 in native Cursor. The idea was inspired in part by a conversation with Maria Rocks. Outrigger is independent of T3 Code and is not an official T3 Tools product. T3 Code palette material retains its upstream [MIT notice](docs/T3-LICENSE.txt).
+
+## Sponsors
+
+<!-- sponsors:start -->
+No sponsors yet. [Sponsor on GitHub](https://github.com/sponsors/baney75) and your name appears here automatically.
+<!-- sponsors:end -->
