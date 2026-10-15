@@ -1,3 +1,5 @@
+> **Outrigger is retired.** Its coding-session panel is being merged into [BaneySpaces](https://github.com/baney75/baneyspaces), whose Deck already tracks T3 Code, Claude Code and other agent sessions. This repository is archived; existing releases still download.
+
 # Outrigger
 
 ![Outrigger: your T3 Code sessions beside the page you are reading](docs/images/hero.svg)
